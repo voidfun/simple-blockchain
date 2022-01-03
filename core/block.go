@@ -17,16 +17,13 @@ type Block struct {
 }
 
 type Node struct {
-	Port string
-}
-
-func (n *Node) httpAddr() string {
-	return "http://localhost:" + n.Port
+	URL string
 }
 
 type Blockchain struct {
 	Blocks []Block
-	Nodes []Node
+	Nodes map[string]Node
+	SelfNode Node
 }
 
 func (bc *Blockchain) replaceChain(newBlocks []Block) {

@@ -1,7 +1,7 @@
 # How to run
 ```
 git clone https://github.com/voidfun/simple-blockchain.git
-cd simple-blockchain
+cd simple-blockchain/core
 go run .
 ```
 
@@ -13,20 +13,21 @@ go run .
         "BPM": 123
     }
     ```
-- Register ports to blockchain: `POST {httpAddr}/nodes/register`
+- Register ports to blockchain: `POST {httpAddr}/nodes`
     ```
     {
-        "Ports": ["9001", "9002"]
+        "URLs": ["http://localhost:7777", "http://localhost:8888"]
     }
     ```
 - List nodes of blockchain: `GET {httpAddr}/nodes`
+- Sync blocks and nodes: `GET {httpAddr}/syncAll`
 
 # TODO list
 - [ ] Basic data structure
 - [ ] HASH/Merkle Root/Validation
 - [ ] Storage
 - [ ] Consensus(POW)
-- [ ] Instruction
-- [ ] Sync
-- [ ] Multi port communication
+- [x] Instruction
+- [x] Sync
+- [x] Multi port communication
 - [ ] Documentation

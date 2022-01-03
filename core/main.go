@@ -6,7 +6,7 @@ import (
 	"os"
 	"time"
 
-	"github.com/davecgh/go-spew/spew"
+	// "github.com/davecgh/go-spew/spew"
 	"github.com/joho/godotenv"
 )
 
@@ -18,22 +18,26 @@ func main() {
 		log.Fatal(err)
 	}
 
+	host := os.Getenv("HOST")
 	port := os.Getenv("PORT")
+	url := "http://" + host + ":" + port
 	blockchain.Blocks = make([]Block, 0)
-	blockchain.Nodes = make([]Node, 0)
-	blockchain.Nodes = append(blockchain.Nodes, Node{port})
+	node := Node{url}
+	blockchain.SelfNode = node
+	blockchain.Nodes = make(map[string]Node)
+	blockchain.Nodes[url] = node
 	blockchain.generateGenesisBlock()
-	spew.Dump(blockchain)
+	// spew.Dump(blockchain)
 
 	log.Fatal(run(port))
 }
 
-func run(Port string) error {
+func run(port string) error {
 	mux := makeMuxRouter()
-	log.Println("Listening on ", Port)
+	log.Println("Listening on ", port)
 
 	s := &http.Server{
-		Addr: ":" + Port,
+		Addr: ":" + port,
 		Handler: mux,
 		ReadTimeout: 10 * time.Second,
 		WriteTimeout: 10 * time.Second,
