@@ -1,5 +1,13 @@
 package main
 
+/*
+import (
+	"bytes"
+	"io/ioutil"
+	"net/http"
+)
+
+
 import (
 	"bytes"
 	"encoding/json"
@@ -15,7 +23,7 @@ func (bc *Blockchain) syncBlocks() {
 		resp, err := httpGet(listBlocksUrl)
 		if err != nil {
 			log.Fatal(err)
-			continue 
+			continue
 		}
 		var blocks []Block
 		json.Unmarshal(resp, &blocks)
@@ -34,7 +42,7 @@ func (bc *Blockchain) syncAll() {
 		resp, err := httpGet(syncBlocksUrl)
 		if err != nil {
 			log.Fatal(err)
-			continue 
+			continue
 		}
 		var blocks []Block
 		json.Unmarshal(resp, &blocks)
@@ -49,12 +57,12 @@ func (bc *Blockchain) syncNodes() {
 	m := Message{}
 	m.URLs = urls
 	jsonBytes, _ := json.Marshal(m)
-	
+
 	for url, _ := range bc.Nodes {
 		nodesUrl := url + "/nodes"
 		resp, err := httpPost(nodesUrl, string(jsonBytes))
 		if err != nil {
-			return 
+			return
 		}
 		log.Println(resp)
 	}
@@ -91,3 +99,4 @@ func httpPost(url string, data string) (bool, error) {
 	log.Println(string(body))
 	return true, nil
 }
+*/

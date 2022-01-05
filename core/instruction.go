@@ -1,5 +1,6 @@
 package main
 
+/*
 import (
 	"encoding/json"
 	"io"
@@ -8,6 +9,7 @@ import (
 	// "github.com/davecgh/go-spew/spew"
 	"github.com/gorilla/mux"
 )
+
 
 // Web router
 func makeMuxRouter() http.Handler {
@@ -134,3 +136,4 @@ func respondWithJSON(w http.ResponseWriter, r *http.Request, code int, payload i
 	w.WriteHeader(code)
 	w.Write(response)
 }
+*/

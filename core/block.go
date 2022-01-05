@@ -2,94 +2,66 @@ package main
 
 import (
 	"crypto/sha256"
-	"encoding/hex"
-	"time"
-
-	"github.com/davecgh/go-spew/spew"
+	"fmt"
+	"github.com/ethereum/go-ethereum/common"
+	json "github.com/json-iterator/go"
 )
 
+const BlockReward = 100
+
+type BlockHeader struct {
+	Parent Hash           `json:"parent"`
+	Number uint64         `json:"number"`
+	Nonce  uint32         `json:"nonce"`
+	Time   uint64         `json:"time"`
+	Miner  common.Address `json:"miner"`
+}
+
 type Block struct {
-	Index int
-	Timestamp string
-	BPM int
-	Hash string
-	PrevHash string
+	Header BlockHeader `json:"header"`
+	TXs    []SignedTx  `json:"payload"`
 }
 
-type Node struct {
-	URL string
+func NewBlock(parent Hash, number uint64, nonce uint32, time uint64, miner common.Address, txs []SignedTx) Block {
+	return Block{BlockHeader{parent, number, nonce, time, miner}, txs}
 }
 
-type Blockchain struct {
-	Blocks []Block
-	Nodes map[string]Node
-	SelfNode Node
-}
-
-func (bc *Blockchain) replaceChain(newBlocks []Block) {
-	if len(newBlocks) > len(bc.Blocks) {
-		bc.Blocks = newBlocks
-	}
-}
-
-func (bc *Blockchain) generateGenesisBlock() {
-	t := time.Now()
-	genesisBlock := Block{0, t.String(), 0, "", ""}
-	genesisBlock.Hash = calculateHash(genesisBlock)
-	spew.Dump(genesisBlock)
-	bc.Blocks = append(bc.Blocks, genesisBlock)
-}
-
-func (bc *Blockchain) generateBlock(BPM int) (Block, error) {
-	t := time.Now()
-	var newBlock Block
-	oldBlock := bc.Blocks[len(bc.Blocks) - 1]
-	newBlock.Index = oldBlock.Index + 1
-	newBlock.Timestamp = t.String()
-	newBlock.BPM = BPM
-	newBlock.PrevHash = oldBlock.Hash
-	newBlock.Hash = calculateHash(newBlock)
-	return newBlock, nil
-}
-
-func (bc *Blockchain) addBlockRecord(BPM int) (bool, error) {
-	newBlock, err := bc.generateBlock(BPM)
+func (b *Block) Hash() (Hash, error) {
+	blockJson, err := json.Marshal(b)
 	if err != nil {
-		return false, err
+		return Hash{}, err
 	}
-	return bc.addBlock(newBlock), nil
+
+	return sha256.Sum256(blockJson), nil
 }
 
-func (bc *Blockchain) addBlock(newBlock Block) bool {
-	oldBlock := bc.Blocks[len(bc.Blocks) - 1]
-	if isBlockValid(newBlock, oldBlock) {
-		newBlockchain := append(bc.Blocks, newBlock)
-		bc.replaceChain(newBlockchain)
-		spew.Dump(bc)
-		return true
-	} else {
-		return false
+func (b *Block) GasReward() uint {
+	reward := uint(0)
+
+	for _, tx := range b.TXs {
+		reward += tx.GasCost()
 	}
+
+	return reward
 }
 
-func isBlockValid(newBlock, oldBlock Block) bool {
-	if oldBlock.Index + 1 != newBlock.Index {
+func IsBlockHashValid(hash Hash, miningDifficulty uint) bool {
+	zeroesCount := uint(0)
+
+	for i := uint(0); i < miningDifficulty; i++ {
+		if fmt.Sprintf("%x", hash[i]) == "0" {
+			zeroesCount++
+		}
+	}
+
+	if fmt.Sprintf("%x", hash[miningDifficulty]) == "0" {
 		return false
 	}
-	if oldBlock.Hash != newBlock.PrevHash {
-		return false
-	}
-	if calculateHash(newBlock) != newBlock.Hash {
-		return false
-	}
-	return true
+
+	return zeroesCount == miningDifficulty
 }
 
-func calculateHash(block Block) string {
-	record := string(block.Index) + block.Timestamp + string(block.BPM) + block.PrevHash
-	h := sha256.New()
-	h.Write(([]byte(record)))
-	hashed := h.Sum(nil)
-	return hex.EncodeToString(hashed)
+type BlockFS struct {
+	Key   Hash  `json:"hash"`
+	Value Block `json:"block"`
 }
-
