@@ -23,11 +23,11 @@ go run .
 - Sync blocks and nodes: `GET {httpAddr}/syncAll`
 
 # TODO list
-- [ ] Basic data structure
-- [ ] HASH/Merkle Root/Validation
-- [ ] Storage
-- [ ] Consensus(POW)
+- [x] Basic data structure
+- [x] HASH/Merkle Root/Validation
+- [x] Storage
+- [x] Consensus(POW)
 - [x] Instruction
 - [x] Sync
 - [x] Multi port communication
-- [ ] Documentation
+- [x] Documentation
