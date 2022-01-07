@@ -184,7 +184,7 @@ func setupMiningNodeDir(andrejBalance uint, forkTip1 uint64) (dataDir string, an
 
 func copyKeystoreFilesIntoTestDataDirPath(dataDir string) error {
 	pwd, _ := os.Getwd()
-	pwd = pwd + "/core/"
+	pwd = pwd + "/"
 	fmt.Println(pwd)
 	andrejSrcKs, err := os.Open(pwd + testKsAndrejFile)
 	if err != nil {
