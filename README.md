@@ -6,23 +6,13 @@ go run .
 ```
 
 # Instructions
-- Show blockchain: `GET {httpAddr}/`
-- Add new record to blockchain: `POST {httpAddr}/`
-    ```
-    {
-        "BPM": 123
-    }
-    ```
-- Register ports to blockchain: `POST {httpAddr}/nodes`
-    ```
-    {
-        "URLs": ["http://localhost:7777", "http://localhost:8888"]
-    }
-    ```
-- List nodes of blockchain: `GET {httpAddr}/nodes`
-- Sync blocks and nodes: `GET {httpAddr}/syncAll`
+- Show balances: `GET {httpAddr}/balances/list`
+- Add transactions: `GET {httpAddr}/transactions: `POST {httpAddr}/tx/add`
+- Show the status of the node: `GET {httpAddr}/node/status`
+- Sync node: `GET {httpAddr}/node/sync`
+- Add peer node: `POST {httpAddr}/node/peer`
 
-# TODO list
+# Features
 - [x] Basic data structure
 - [x] HASH/Merkle Root/Validation
 - [x] Storage
