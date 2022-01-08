@@ -20,7 +20,6 @@ go run .
   }
   ```
 - Show the status of the node: `GET {httpAddr}/node/status`
-- Sync node: `GET {httpAddr}/node/sync`
 - Add peer node: `GET {httpAddr}/node/peer?ip={your_ip}&port={your_port}&miner={}&version={}`
 
 # Features
