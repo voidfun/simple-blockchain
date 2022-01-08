@@ -17,12 +17,13 @@ const DefaultBootstrapAcc = "0x09ee50f2f37fcba1845de6fe5c762e83e65e755c"
 const DefaultMiner = "0x0000000000000000000000000000000000000000"
 const DefaultIP = "127.0.0.1"
 const HttpSSLPort = 443
+const endpointBalances = "/balances"
+const endpointTxAdd = "/tx/add"
 const endpointStatus = "/node/status"
-
-const endpointSync = "/node/sync"
-const endpointSyncQueryKeyFromBlock = "fromBlock"
-
 const endpointAddPeer = "/node/peer"
+const endpointSync = "/node/sync"
+
+const endpointSyncQueryKeyFromBlock = "fromBlock"
 const endpointAddPeerQueryKeyIP = "ip"
 const endpointAddPeerQueryKeyPort = "port"
 const endpointAddPeerQueryKeyMiner = "miner"
@@ -132,11 +133,11 @@ func (n *Node) LatestBlockHash() Hash {
 func (n *Node) serveHttp(ctx context.Context, isSSLDisabled bool, sslEmail string) error {
 	handler := http.NewServeMux()
 
-	handler.HandleFunc("/balances/list", func(w http.ResponseWriter, r *http.Request) {
+	handler.HandleFunc(endpointBalances, func(w http.ResponseWriter, r *http.Request) {
 		listBalancesHandler(w, r, n.state)
 	})
 
-	handler.HandleFunc("/tx/add", func(w http.ResponseWriter, r *http.Request) {
+	handler.HandleFunc(endpointTxAdd, func(w http.ResponseWriter, r *http.Request) {
 		txAddHandler(w, r, n)
 	})
 

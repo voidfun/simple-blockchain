@@ -22,7 +22,7 @@ type TxAddReq struct {
 	FromPwd  string `json:"from_pwd"`
 	To       string `json:"to"`
 	Gas      uint   `json:"gas"`
-	GasPrice uint   `json:"gasPrice"`
+	GasPrice uint   `json:"gas_price"`
 	Value    uint   `json:"value"`
 	Data     string `json:"data"`
 }

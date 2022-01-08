@@ -17,7 +17,7 @@ type Tx struct {
 	From     common.Address `json:"from"`
 	To       common.Address `json:"to"`
 	Gas      uint           `json:"gas"`
-	GasPrice uint           `json:"gasPrice"`
+	GasPrice uint           `json:"gas_price"`
 	Value    uint           `json:"value"`
 	Nonce    uint           `json:"nonce"`
 	Data     string         `json:"data"`
@@ -99,7 +99,7 @@ func (t Tx) MarshalJSON() ([]byte, error) {
 		From     common.Address `json:"from"`
 		To       common.Address `json:"to"`
 		Gas      uint           `json:"gas"`
-		GasPrice uint           `json:"gasPrice"`
+		GasPrice uint           `json:"gas_price"`
 		Value    uint           `json:"value"`
 		Nonce    uint           `json:"nonce"`
 		Data     string         `json:"data"`
@@ -149,7 +149,7 @@ func (t SignedTx) MarshalJSON() ([]byte, error) {
 		From     common.Address `json:"from"`
 		To       common.Address `json:"to"`
 		Gas      uint           `json:"gas"`
-		GasPrice uint           `json:"gasPrice"`
+		GasPrice uint           `json:"gas_price"`
 		Value    uint           `json:"value"`
 		Nonce    uint           `json:"nonce"`
 		Data     string         `json:"data"`

@@ -133,7 +133,7 @@ func NodeMining(ip string, port int) {
 		for {
 			select {
 			case <-ticker.C:
-				if n.state.LatestBlock().Header.Number == 1 {
+				if n.state.LatestBlock().Header.Number == 1000 {
 					closeNode()
 					return
 				}
